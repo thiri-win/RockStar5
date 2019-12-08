@@ -8,6 +8,6 @@ while($line = fgets($file)) {
     echo $line;
 }
 
-echo "Process Two\n\n";
+echo "\nProcess Two\n";
 
 fclose($file);
