@@ -1,2 +1,2 @@
-import {add} from './calc';
+import { add, PI } from "./calc";
 console.log(add(23,34));
