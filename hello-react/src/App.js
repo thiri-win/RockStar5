@@ -3,7 +3,12 @@ import React from 'react';
 class Item extends React.Component {
   render() {
     return (
-      <li>{this.props.name}</li>
+      <li>
+        {this.props.item.name}
+        <a href="#/" onClick={ ()=> {
+          this.props.remove(this.props.item._id)
+        } }>&times;</a>
+      </li>
     )
   }
 }
@@ -12,33 +17,53 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: ['Apple','Orange','Mango']
-    };
-    this.input = React.createRef();
-  }
-  add = () => {
-    this.setState({
       data: [
-        ...this.state.data, this.input.current.value
+        {'_id':1, 'name': 'Alice'},
+        {'_id':2, 'name': 'Bob'},
       ]
-    })
-  };
-  render() {    
+    }
+    this.autoid = this.state.data.length;
+    this.input = React.createRef();
+    this.add = this.add.bind(this);
+    this.remove = this.remove.bind(this);
+
+  }
+
+  add() {
+    var data = this.state.data;
+    var name = this.input.current.value;
+    data.push({'_id': ++this.autoid, 'name': name});
+    this.setState ({
+      data:data
+    });
+  }
+
+  remove(_id) {
+    var data = this.state.data.filter(item => item._id !== _id);
+    this.setState ({
+      data:data
+    });
+  }
+
+  render() {
     return (
       <div>
-        <ul>
-          {this.state.data.map(i=>{
-            return(
-              <Item name={i} />
-            )
-          })}
-        </ul>
-        <input type="text"ref={this.input} />
-        <button onClick={this.add}>+</button>
         <h1>Hello React</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+        <ul>
+          { this.state.data.map(item => 
+            <Item 
+            item={item} 
+            key={item._id}
+            remove={this.remove} />
+            ) 
+          }
+
+        </ul>
+        <input type="text" ref={this.input} />
+        <button onClick={this.add}> Add </button>
       </div>
     )
   }
 }
+
 export default App
