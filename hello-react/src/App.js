@@ -1,35 +1,19 @@
 import React from 'react';
-
-class Item extends React.Component {
-  render() {
-    return (
-      <li>
-        {this.props.item.name}
-        <a href="#/" onClick={ ()=> {
-          this.props.remove(this.props.item._id)
-        } }>&times;</a>
-      </li>
-    )
-  }
-}
+import Item from './Item';
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      data: [
-        {'_id':1, 'name': 'Alice'},
-        {'_id':2, 'name': 'Bob'},
-      ]
-    }
-    this.autoid = this.state.data.length;
-    this.input = React.createRef();
-    this.add = this.add.bind(this);
-    this.remove = this.remove.bind(this);
-
+  state = {
+    data: [
+      {'_id':1, 'name': 'Alice'},
+      {'_id':2, 'name': 'Bob'},
+    ]
   }
+  
+  input = React.createRef();
 
-  add() {
+  autoid = this.state.data.length;
+
+  add = () => {
     var data = this.state.data;
     var name = this.input.current.value;
     data.push({'_id': ++this.autoid, 'name': name});
@@ -38,7 +22,7 @@ class App extends React.Component {
     });
   }
 
-  remove(_id) {
+  remove = (_id) => {
     var data = this.state.data.filter(item => item._id !== _id);
     this.setState ({
       data:data
@@ -57,7 +41,6 @@ class App extends React.Component {
             remove={this.remove} />
             ) 
           }
-
         </ul>
         <input type="text" ref={this.input} />
         <button onClick={this.add}> Add </button>
@@ -66,4 +49,4 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default App;
