@@ -1,30 +1,29 @@
-import React from 'react';
-import Item from './Item';
+import React from 'react'
+import Item from './Item'
 
 const styles = {
-    done: {
-        color: 'gray',
-        textDecoration: 'line-through',
-    }
-};
+  done: {
+    color: 'gray',
+    textDecoration: 'line-through',
+  }
+}
 
 class DoneList extends React.Component {
-    render() {
-      return (
-        <ul style={styles.done}>
-          {this.props.items.map(item => {
-            return (
-              <Item 
-              key={item._id} 
-              item={item}
-              remove = {this.props.remove}
-              toggle = {this.props.toggle}
-              />
-            )
-          })}
-        </ul>
-      )
-    }
+  render() {
+    return(
+      <ul style={styles.done}>
+        {this.props.items.map(item => 
+        <Item 
+        key = {item._id}
+        item = {item}
+        remove = {this.props.remove}
+        toggle = {this.props.toggle}
+        edit = {this.props.edit}
+        />
+        )} 
+      </ul>
+    )
   }
+}
 
-  export default DoneList
+export default DoneList

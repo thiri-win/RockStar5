@@ -1,23 +1,22 @@
-import React from 'react';
-import Item from './Item';
+import React from 'react' 
+import Item from './Item'
 
 class TodoList extends React.Component {
-    render() {
-      return (
-        <ul>
-          {this.props.items.map(item => {
-            return (
-              <Item 
-              key={item._id} 
-              item={item}
-              remove = {this.props.remove}
-              toggle = {this.props.toggle}
-              />
-            )
-          })}
-        </ul>
-      )
-    }
+  render() {
+    return(
+      <ul>
+        {this.props.items.map(item => 
+        <Item 
+        key = {item._id} 
+        item = {item} 
+        remove = {this.props.remove}
+        toggle = {this.props.toggle}
+        edit = {this.props.edit}
+        />
+          )}
+      </ul>
+    )
   }
+}
 
-  export default TodoList
+ export default TodoList
