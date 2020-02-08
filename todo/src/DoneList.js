@@ -18,7 +18,6 @@ class DoneList extends React.Component {
         item = {item}
         remove = {this.props.remove}
         toggle = {this.props.toggle}
-        edit = {this.props.edit}
         />
         )} 
       </ul>

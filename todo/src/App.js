@@ -4,18 +4,22 @@ import DoneList from './DoneList'
 
 class App extends React.Component {
   state = {
-    items: [
-      {_id:1, subject: 'Bread', status: 0},
-      {_id:2, subject: 'Milk', status: 1},
-      {_id:3, subject: 'Butter', status: 0},
-      {_id:4, subject: 'Jam', status: 1},
-      {_id:5, subject: 'Coffee', status: 0},
-    ]
+    items: []
   }
+
   input = React.createRef();
-  autoid = this.state.items.length;
+  api = "http://localhost:8000/tasks";
+
+  componentDidMount() {
+    fetch(this.api)
+    .then( res => res.json())
+    .then( items => {
+      this.setState({items})
+    });
+  }
 
   remove = (_id) => {
+    fetch(`${this.api}/${_id}`, {method:'DELETE'});
     this.setState({
       items: this.state.items.filter(item => item._id !== _id)
     })
@@ -24,27 +28,36 @@ class App extends React.Component {
   toggle = (_id) =>{
     this.setState({
       items: this.state.items.map ( item => {
-        if(item._id === _id) item.status = +! item.status;
+        if(item._id === _id) {
+          item.status = +! item.status
+          fetch(`${this.api}/${_id}`, 
+            {
+              method:'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({status: item.status})
+            });
+        };
         return item
       })
     })
   }
 
   add = ()=> {
-    this.setState({
-      items: [
-        ...this.state.items,
-        {
-          _id:++this.autoid,
-          subject: this.input.current.value,
-          status: 0,
-        }
-      ]
+    fetch(this.api,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({subject: this.input.current.value})
     })
-  }
-
-  edit = (_id) => {
-    console.log(_id)
+    .then(res => res.json())
+    .then( item => {
+      this.setState({
+        items:[ ...this.state.items, item ]
+      });
+    });
   }
 
   render() {
@@ -57,13 +70,11 @@ class App extends React.Component {
         items={this.state.items.filter(item => item.status === 0)} 
         remove = {this.remove}
         toggle = {this.toggle}
-        edit = {this.edit}
         />
         <DoneList 
         items={this.state.items.filter(item => item.status === 1)} 
         remove = {this.remove}
         toggle = {this.toggle}
-        edit = {this.edit}
         />
       </div>
     )

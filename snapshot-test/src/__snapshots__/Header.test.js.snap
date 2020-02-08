@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Component 1`] = `
+<div
+  count={4}
+>
+  <h1>
+    Hello
+  </h1>
+  <p>
+    This is snapshot tesing.
+  </p>
+</div>
+`;

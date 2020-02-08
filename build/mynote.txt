@@ -1,0 +1,30 @@
+const MyContext = React.createContext("Default Value");
+
+    // const App = props => (
+    //     <MyContext.Provider value="React Context">
+    //     <Header />
+    //     </MyContext.Provider>
+    // )
+    // OR(in this case Default Value will work);
+    const App = props => (
+        <Header />
+    )
+
+    const Header = props => (
+        <div>
+            <Title />
+        </div>
+    );
+
+    // const Title = props => (
+    //     <MyContext.Consumer>
+    //     {value => <h1>{value}</h1>}
+    //     </MyContext.Consumer>
+    // ) 
+    // OR
+    const Title = props => {
+        const value = React.useContext(MyContext);
+        return <h1>{value}</h1>
+    }
+
+    ReactDOM.render(<App />, document.getElementById('app'));
